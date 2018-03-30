@@ -79,14 +79,50 @@ string toMilitary(string time) {
 	return "ERROR";
 }
 
-int main() {
-	// initialize array elements
-	for (int i = 0; i < COLS; i++) {
-		for (int j = 0; j < MAX; j++) {
-			master[i][j] = "NONE"; // Initialize with NONE so we will know if something is wrong
-		}
-	}
+//changed it so it is it's own separate function. LG
+void initalizeArray (){
+    // initialize array elements
+    for (int i = 0; i < COLS; i++) {
+        for (int j = 0; j < MAX; j++) {
+            master[i][j] = "NONE"; // Initialize with NONE so we will know if something is wrong
+        }
+    }
 
-	printMaster();
+}
+
+
+int main()
+{
+        ifstream inFile;
+        ofstream outFile;
+        string cell;
+
+        initalizeArray();
+
+        inFile.open( "/home/lili/CLionProjects/untitled1/Test.csv" );
+        outFile.open( "Master Copy.txt" );
+
+        if ( !inFile )
+        {
+            cout << "Unable to Open File";
+        }
+        while (!inFile.fail())
+        {
+            getline (inFile, cell, ',');   //get a group of wards seperated by commas LG
+            for ( int col = 0; col < COLS; col++)
+            {
+                for ( int row = 0; row < MAX; row++)
+                {
+                    master[col][row] = cell;    //be filling array, but I don't think it is working LG
+                }
+            }
+        }
+   	 printMaster();
+        inFile.close( );
+        outFile.close( );
+
+
+
+
     return 0;
 }
